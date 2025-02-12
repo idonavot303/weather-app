@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import Navigation from './components/Navigation';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Weather Dashboard",
-  description: "Weather forecast application",
+  title: 'Weather Dashboard',
+  description: 'Weather forecast application',
 };
 
 export default function RootLayout({
@@ -18,13 +19,18 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header>
-          <div className="bg-gray-600 text-white p-4 shadow-md border-b border-gray-500">
-            <h1 className="text-2xl md:text-4xl font-bold">
-              Weather Dashboard
-            </h1>
+          <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white">
+            <div className="container mx-auto px-4 py-3">
+              <div className="flex items-center justify-between">
+                <h1 className="text-2xl md:text-3xl font-bold tracking-tight hover:text-gray-200 transition-colors duration-200">
+                  Weather Dashboard
+                </h1>
+                <Navigation />
+              </div>
+            </div>
           </div>
         </header>
-        {children}
+        <main className="min-h-screen bg-gray-50">{children}</main>
       </body>
     </html>
   );
