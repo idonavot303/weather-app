@@ -9,16 +9,26 @@ export const useWeatherQuery = (city: string) => {
   useEffect(() => {
     const fetchWeather = async () => {
       if (!city) return;
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
-        const response = await fetch(`/api/weather/${encodeURIComponent(city)}`);
+        const response = await fetch(
+          `/api/weather/${encodeURIComponent(city)}`
+        );
         if (!response.ok) throw new Error('Failed to fetch weather data');
-        
+
         const data = await response.json();
-        setWeather(data);
+        const weatherData = {
+          city: data.name,
+          temperature: data.main.temp,
+          description: data.weather[0].description,
+          icon: data.weather[0].icon,
+          humidity: data.main.humidity,
+          windSpeed: data.wind.speed,
+        };
+        setWeather(weatherData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
