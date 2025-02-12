@@ -17,7 +17,6 @@ export const useWeatherQuery = (city: string) => {
         const response = await fetch(
           `/api/weather/${encodeURIComponent(city)}`
         );
-        if (!response.ok) throw new Error('Failed to fetch weather data');
 
         const data = await response.json();
         const weatherData = {

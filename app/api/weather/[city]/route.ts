@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { NextRequest } from 'next/server';
 
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
@@ -22,13 +21,13 @@ export async function GET(
     const response = await fetch(
       `${BASE_URL}?q=${encodeURIComponent(city)}&units=metric&appid=${API_KEY}`
     );
-
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       return Response.json(
         {
-          error: errorData.message || 'Failed to fetch weather data',
+          error: errorData.message || 'City not found',
           code: response.status,
+          type: response.status === 404 ? 'CITY_NOT_FOUND' : 'API_ERROR',
         },
         { status: response.status }
       );
@@ -37,7 +36,6 @@ export async function GET(
     const data = await response.json();
     return Response.json(data);
   } catch (error) {
-    console.error('Weather API error:', error);
     return Response.json(
       {
         error: 'Internal server error',

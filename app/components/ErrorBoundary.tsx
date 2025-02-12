@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useState } from "react";
+'use client';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -10,13 +11,13 @@ const ErrorBoundary: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     const handleError = (error: ErrorEvent) => {
       setHasError(true);
-      console.error("Uncaught error:", error);
+      console.error('Uncaught error:', error);
     };
 
-    window.addEventListener("error", handleError);
+    window.addEventListener('error', handleError);
 
     return () => {
-      window.removeEventListener("error", handleError);
+      window.removeEventListener('error', handleError);
     };
   }, []);
 
