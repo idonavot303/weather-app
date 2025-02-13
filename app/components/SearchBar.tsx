@@ -1,7 +1,6 @@
 'use client';
 import { useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
-import { log } from 'console';
 
 interface City {
   name: string;
@@ -19,7 +18,6 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
   const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Create a debounced version of searchCities
   const debouncedSearch = useCallback(
     debounce(async (searchQuery: string) => {
       if (!searchQuery.trim()) {
@@ -42,8 +40,6 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           setCities(data);
         }
       } catch (error) {
-        console.log(error);
-        console.error('Failed to fetch cities:', error);
         setCities([]);
         throw error instanceof Error
           ? error

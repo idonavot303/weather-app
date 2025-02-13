@@ -1,4 +1,3 @@
-import ErrorBoundary from '@/app/components/ErrorBoundary';
 import WeatherSection from '@/app/components/WeatherSection';
 
 export default function Home() {
