@@ -1,7 +1,8 @@
 import { City } from '@/types';
+import { RECENT_CITIES_KEY } from '@/consts';
 
 export const addToRecentCities = (cityName: string) => {
-  const existingCities = localStorage.getItem('recentCities');
+  const existingCities = localStorage.getItem(RECENT_CITIES_KEY);
   const cities: City[] = existingCities ? JSON.parse(existingCities) : [];
 
   const cityIndex = cities.findIndex((city) => city.name === cityName);
@@ -18,7 +19,7 @@ export const addToRecentCities = (cityName: string) => {
   // Keep only last 5 cities
   const updatedCities = cities.slice(0, 5);
 
-  localStorage.setItem('recentCities', JSON.stringify(updatedCities));
+  localStorage.setItem(RECENT_CITIES_KEY, JSON.stringify(updatedCities));
 
   return updatedCities;
 };

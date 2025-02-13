@@ -1,21 +1,28 @@
-import { useCallback, useState } from "react";
+import { WEATHER_APP_VARIANT } from '@/consts';
+import { useState, useEffect } from 'react';
 
-const useToggle = (
-  initialValue: boolean = false
-) => {
-  const [value, setValue] = useState(initialValue);
+const useToggle = (initialValue: boolean = false) => {
+  const [value, setValue] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(WEATHER_APP_VARIANT);
+      return stored ? JSON.parse(stored) : initialValue;
+    }
+    return initialValue;
+  });
 
-  const toggle = useCallback(() => {
-    setValue((prevValue) => !prevValue);
-  }, []);
+  useEffect(() => {
+    localStorage.setItem(WEATHER_APP_VARIANT, JSON.stringify(value));
+  }, [value]);
 
-  const setTrue = useCallback(() => {
+  const toggle = () => setValue(!value);
+
+  const setTrue = () => {
     setValue(true);
-  }, []);
+  };
 
-  const setFalse = useCallback(() => {
+  const setFalse = () => {
     setValue(false);
-  }, []);
+  };
 
   return { value, toggle, setTrue, setFalse };
 };

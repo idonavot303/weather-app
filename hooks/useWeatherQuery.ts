@@ -26,6 +26,7 @@ export const useWeatherQuery = (city: string) => {
           icon: data.weather[0].icon,
           humidity: data.main.humidity,
           windSpeed: data.wind.speed,
+          feelsLike: data.main.feels_like,
         };
         setWeather(weatherData);
       } catch (err) {

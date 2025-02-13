@@ -20,6 +20,7 @@ export default function WeatherSection() {
     if (storedCities) {
       setCities(JSON.parse(storedCities));
     }
+    console.log(getVariant());
     setVariant(getVariant());
     setIsLoaded(true);
   }, []);

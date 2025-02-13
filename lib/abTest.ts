@@ -1,5 +1,6 @@
-import { Variant } from "@/types";
+import { Variant } from '@/types';
+import { WEATHER_APP_VARIANT } from '@/consts';
 
 export const getVariant = (): Variant => {
-    return Math.random() < 0.5 ? "A" : "B";
+  return localStorage.getItem(WEATHER_APP_VARIANT) as Variant;
 };

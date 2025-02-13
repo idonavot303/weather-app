@@ -4,6 +4,7 @@ export type WeatherData = {
   description: string;
   humidity: number;
   windSpeed: number;
+  feelsLike: number;
 };
 
 export type City = {
