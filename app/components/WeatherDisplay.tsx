@@ -11,7 +11,6 @@ import {
 import { useWeatherQuery } from '@/hooks/useWeatherQuery';
 import { Variant } from '@/types';
 import useToggle from '@/hooks/useToggle';
-import { log } from 'console';
 
 type Props = {
   city: string;
@@ -33,14 +32,8 @@ const WeatherIcon = ({ description }: { description: string }) => {
 };
 
 export default function WeatherDisplay({ city, variant }: Props) {
-  const { weather, error } = useWeatherQuery(city);
+  const { weather } = useWeatherQuery(city);
   const { value: showVariantB, toggle } = useToggle(variant === 'A');
-  console.log(showVariantB);
-
-  if (error) {
-    //check error handling
-    throw error; // This will be caught by the ErrorBoundary
-  }
 
   if (!weather) return null;
 

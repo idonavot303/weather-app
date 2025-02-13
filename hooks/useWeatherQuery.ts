@@ -19,6 +19,28 @@ export const useWeatherQuery = (city: string) => {
         );
 
         const data = await response.json();
+        if (
+          response.status !== 200 ||
+          !data ||
+          !data.main ||
+          !data.weather?.[0]
+        ) {
+          const errorMessage =
+            response.status === 404
+              ? `City "${city}" not found`
+              : 'Invalid weather data received';
+          setError(errorMessage);
+          window.dispatchEvent(
+            new CustomEvent('weatherError', {
+              detail: {
+                name: 'WeatherError',
+                message: errorMessage,
+              },
+            })
+          );
+          return;
+        }
+
         const weatherData = {
           city: data.name,
           temperature: data.main.temp,
@@ -31,6 +53,11 @@ export const useWeatherQuery = (city: string) => {
         setWeather(weatherData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
+        window.dispatchEvent(
+          new ErrorEvent('error', {
+            error: err instanceof Error ? err : new Error('An error occurred'),
+          })
+        );
       } finally {
         setLoading(false);
       }

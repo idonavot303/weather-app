@@ -5,7 +5,7 @@ const API_KEY = process.env.OPENWEATHER_API_KEY;
 
 export async function GET(
   request: NextRequest,
-  context: { params: { city: string } }
+  context: { params: Promise<{ city: string }> }
 ) {
   try {
     const params = await context.params;
@@ -21,17 +21,6 @@ export async function GET(
     const response = await fetch(
       `${BASE_URL}?q=${encodeURIComponent(city)}&units=metric&appid=${API_KEY}`
     );
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      return Response.json(
-        {
-          error: errorData.message || 'City not found',
-          code: response.status,
-          type: response.status === 404 ? 'CITY_NOT_FOUND' : 'API_ERROR',
-        },
-        { status: response.status }
-      );
-    }
 
     const data = await response.json();
     return Response.json(data);

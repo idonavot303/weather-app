@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import debounce from 'lodash/debounce';
 
 interface City {
@@ -18,38 +18,33 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
   const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const debouncedSearch = useCallback(
-    debounce(async (searchQuery: string) => {
-      if (!searchQuery.trim()) {
-        setCities([]);
-        return;
+  const debouncedSearch = debounce(async (searchQuery: string) => {
+    if (!searchQuery.trim()) {
+      setCities([]);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/location/search?query=${searchQuery}`);
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
       }
 
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `/api/location/search?query=${searchQuery}`
-        );
-        const data = await response.json();
-
-        if (data.error) {
-          throw new Error(data.error);
-        }
-
-        if (Array.isArray(data)) {
-          setCities(data);
-        }
-      } catch (error) {
-        setCities([]);
-        throw error instanceof Error
-          ? error
-          : new Error('Failed to search for cities');
-      } finally {
-        setLoading(false);
+      if (Array.isArray(data)) {
+        setCities(data);
       }
-    }, 750),
-    []
-  );
+    } catch (error) {
+      setCities([]);
+      throw error instanceof Error
+        ? error
+        : new Error('Failed to search for cities');
+    } finally {
+      setLoading(false);
+    }
+  }, 750);
 
   return (
     <div className="w-full max-w-md">

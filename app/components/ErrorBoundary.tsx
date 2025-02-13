@@ -9,20 +9,25 @@ const ErrorBoundary: React.FC<Props> = ({ children }) => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    const handleError = (error: ErrorEvent) => {
+    const handleError = (event: CustomEvent) => {
       setHasError(true);
-      console.error('Uncaught error:', error);
     };
 
-    window.addEventListener('error', handleError);
+    window.addEventListener('weatherError', handleError as EventListener);
 
     return () => {
-      window.removeEventListener('error', handleError);
+      window.removeEventListener('weatherError', handleError as EventListener);
     };
   }, []);
 
   if (hasError) {
-    return <h1>Something went wrong.</h1>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-red-500 text-2xl font-bold">
+          Something went wrong. Please try again later or refresh the page.
+        </h1>
+      </div>
+    );
   }
 
   return <>{children}</>;
