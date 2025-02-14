@@ -37,7 +37,14 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
         }
 
         if (Array.isArray(data)) {
-          setCities(data);
+          const uniqueCities = data.filter(
+            (city, index, self) =>
+              index ===
+              self.findIndex(
+                (c) => c.name === city.name && c.country === city.country
+              )
+          );
+          setCities(uniqueCities);
         }
       } catch (error) {
         setCities([]);
