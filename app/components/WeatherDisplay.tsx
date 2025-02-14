@@ -123,7 +123,7 @@ export default function WeatherDisplay({ city, variant }: Props) {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
               <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                   <Droplets className="w-4 h-4" stroke="var(--icon-blue)" />
