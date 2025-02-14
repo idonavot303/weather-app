@@ -6,7 +6,7 @@ import { setVariant } from '@/store/actions';
 import { RootState } from '@/store';
 import { Variant } from '@/types';
 
-export default function useToggle(initialValue: boolean) {
+export default function useToggle() {
   const dispatch = useDispatch();
   const currentVariant = useSelector(
     (state: RootState) => state.abTest.variant
