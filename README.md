@@ -16,7 +16,7 @@
 2. **Clone the Repository**
 
    ```bash
-   git clone git@github.com:idonavot303/weather-app.git .
+   git clone https://github.com/idonavot303/weather-app.git .
    ```
 
 3. **Install Dependencies**
