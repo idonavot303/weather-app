@@ -95,7 +95,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
                 setQuery('');
                 setCities([]);
               }}
-              className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b last:border-b-0 border-gray-200 dark:border-gray-600"
+              className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b last:border-b-0 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100"
             >
               {city.name}, {city.country}
             </li>
