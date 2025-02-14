@@ -55,12 +55,13 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
         setLoading(false);
       }
     }, 750),
-    []
+    [setCities, setLoading]
   );
 
   useEffect(() => {
+    const currentDebouncedSearch = debouncedSearch;
     return () => {
-      debouncedSearch.cancel();
+      currentDebouncedSearch.cancel();
     };
   }, [debouncedSearch]);
 

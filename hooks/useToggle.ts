@@ -1,30 +1,24 @@
-import { WEATHER_APP_VARIANT } from '@/consts';
-import { useState, useEffect } from 'react';
+'use client';
 
-const useToggle = (initialValue: boolean = false) => {
-  const [value, setValue] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(WEATHER_APP_VARIANT);
-      return stored ? JSON.parse(stored) : initialValue;
-    }
-    return initialValue;
-  });
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setVariant } from '@/store/actions';
+import { RootState } from '@/store';
+import { Variant } from '@/types';
 
-  useEffect(() => {
-    localStorage.setItem(WEATHER_APP_VARIANT, JSON.stringify(value));
-  }, [value]);
+export default function useToggle(initialValue: boolean) {
+  const dispatch = useDispatch();
+  const currentVariant = useSelector(
+    (state: RootState) => state.abTest.variant
+  );
 
-  const toggle = () => setValue(!value);
+  const toggle = useCallback(() => {
+    const newVariant: Variant = currentVariant === 'A' ? 'B' : 'A';
+    dispatch(setVariant(newVariant));
+  }, [dispatch, currentVariant]);
 
-  const setTrue = () => {
-    setValue(true);
+  return {
+    value: currentVariant === 'B',
+    toggle,
   };
-
-  const setFalse = () => {
-    setValue(false);
-  };
-
-  return { value, toggle, setTrue, setFalse };
-};
-
-export default useToggle;
+}

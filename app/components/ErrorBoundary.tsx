@@ -9,7 +9,7 @@ const ErrorBoundary: React.FC<Props> = ({ children }) => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    const handleError = (event: CustomEvent) => {
+    const handleError = () => {
       setHasError(true);
     };
 
