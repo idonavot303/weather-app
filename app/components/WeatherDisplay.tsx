@@ -11,6 +11,7 @@ import {
 import { useWeatherQuery } from '@/hooks/useWeatherQuery';
 import { Variant } from '@/types';
 import useToggle from '@/hooks/useToggle';
+import LoadingSpinner from './LoadingSpinner';
 
 type Props = {
   city: string;
@@ -32,8 +33,16 @@ const WeatherIcon = ({ description }: { description: string }) => {
 };
 
 export default function WeatherDisplay({ city, variant }: Props) {
-  const { weather } = useWeatherQuery(city);
+  const { weather, loading } = useWeatherQuery(city);
   const { value: showVariantB, toggle } = useToggle(variant === 'A');
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[400px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!weather) return null;
 
